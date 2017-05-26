@@ -7,10 +7,10 @@ package s17cs350task1;
  */
 public class Connector implements Cloneable{
 
-    private Box childBox = null, parentBox = null;
+    private ComponentBox childBox = null, parentBox = null;
     private Point3D offset = null;
 
-    Connector(Box iChildBox, Point3D iOffset) {
+    Connector(ComponentBox iChildBox, Point3D iOffset) {
 
         this.childBox = iChildBox;
         this.offset = iOffset;
@@ -25,14 +25,14 @@ public class Connector implements Cloneable{
     public Connector clone() throws CloneNotSupportedException{  //5 lines of code expected
 
         Connector connectorClone = (Connector) super.clone();  //clone original object
-        connectorClone.childBox = this.childBox.clone();  //clone the child box
+        connectorClone.childBox = (ComponentBox)this.childBox.clone();  //clone the child box
         connectorClone.childBox.setConnectorToParent(connectorClone);  //set parent connector
         connectorClone.offset = new Point3D(this.offset.getX(), this.offset.getY(), 0);  //clone offset
         return connectorClone;  //return
 
     }
 
-    public Box getChildBox()
+    public ComponentBox getChildBox()
     {
         if(this.childBox == null)
             throw new TaskException("Child box does not exist");
@@ -47,7 +47,7 @@ public class Connector implements Cloneable{
         return this.offset;
     }
 
-    public Box getParentBox()
+    public ComponentBox getParentBox()
     {
         if(this.parentBox == null)
             throw new TaskException("No parent box connected");
@@ -56,7 +56,7 @@ public class Connector implements Cloneable{
 
     public boolean hasParentBox(){   return !(this.parentBox == null);   }
 
-    public void setParentBox(Box iParentBox)
+    public void setParentBox(ComponentBox iParentBox)
     {
         if(iParentBox == null)
             throw new TaskException("Must be a valid box");

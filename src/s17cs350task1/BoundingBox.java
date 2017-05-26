@@ -15,6 +15,7 @@ public class BoundingBox {
 
     public enum E_Plane{
         XY, YZ, XZ
+
     }
 
     public BoundingBox(Point3D iCenter, Dimension3D iSize){
