@@ -16,6 +16,7 @@ public abstract class A_Exporter {
     void append(String data, boolean... withNewLine){
 
 
+
     }
 
     abstract void closeComponentNode(String id);

@@ -30,6 +30,14 @@ public class ComponentBox extends A_Component implements Cloneable {
 
     }
 
+    public ComponentBox clone()throws CloneNotSupportedException{
+
+        ComponentBox cloneBox = (ComponentBox)super.clone();
+        cloneBox.size = this.size.clone();
+
+        return cloneBox;
+    }
+
     @Override
     public String export(A_Exporter exporter) {
         return null;

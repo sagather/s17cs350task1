@@ -38,10 +38,8 @@ public abstract class A_Component {
     public A_Component clone() throws CloneNotSupportedException {
 
         A_Component cloneComponentBox = (A_Component) super.clone();  //clone the object itself
-        //ComponentBox box = (ComponentBox) super.clone();
         cloneComponentBox.componentID = new String(this.componentID);
         cloneComponentBox.root = this.root;  //clone root
-        //box.size = this.size.clone();  //clone size
         cloneComponentBox.childConnectors = new ArrayList<>();  //initialize a new list for childConnectors
         if (this.childConnectors != null) {
             for (Connector c : this.childConnectors) {  //for each existing connector, clone and connect
