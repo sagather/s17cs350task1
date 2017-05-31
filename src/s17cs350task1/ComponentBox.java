@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class ComponentBox extends A_Component implements Cloneable {
 
-    private Dimension3D size= new Dimension3D(0,0,0);
+    private Dimension3D size= new Dimension3D(1,1,1);
 
     ComponentBox(String iName, Dimension3D iSize) {
 
@@ -40,7 +40,38 @@ public class ComponentBox extends A_Component implements Cloneable {
 
     @Override
     public String export(A_Exporter exporter) {
-        return exporter.export();
+
+        List<A_Component> all = new ArrayList<>();
+        String ret = "";
+        A_Component temp = this;
+        while(temp.hasConnectorToParent()){
+            temp = temp.getConnectorToParent().getComponentParent();
+        }
+        all.add(temp);
+        all.addAll(temp.getDescendants());
+
+        exporter.openComponentNode(this.getID());
+        exporter.addPoint("center", this.getAbsoluteCenterPosition());
+
+        List<Point3D> corners = this.generateFrameSelf();
+        exporter.addPoint("left-bottom-far", corners.get(0));
+        exporter.addPoint("right-bottom-far", corners.get(1));
+        exporter.addPoint("right-bottom-near", corners.get(2));
+        exporter.addPoint("left-bottom-near", corners.get(3));
+        exporter.addPoint("left-top-far", corners.get(4));
+        exporter.addPoint("right-top-far", corners.get(5));
+        exporter.addPoint("right-top-near", corners.get(6));
+        exporter.addPoint("left-top-near", corners.get(7));
+        exporter.closeComponentNode(this.getID());
+
+        ret += exporter.export();
+
+        for(A_Component a : this.getChildren()){
+            ret += a.export(exporter);
+        }
+
+        exporter.closeExport();
+        return ret;
     }
 
     public Dimension3D getSize(){   return this.size;   }

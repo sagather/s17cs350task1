@@ -5,6 +5,8 @@ package s17cs350task1;
  */
 public abstract class A_Exporter {
 
+    private boolean closed = false;
+
     public A_Exporter(){
 
     }
@@ -21,16 +23,19 @@ public abstract class A_Exporter {
 
     public void closeExport(){
 
+        export();
+        closed = true;
+
     }
 
     public String export(){
 
-        return "";
+        return "</components>";
     }
 
     public boolean isClosed(){
 
-        return false;
+        return closed;
     }
 
     abstract void openComponentNode(String id);

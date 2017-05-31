@@ -56,13 +56,13 @@ public abstract class A_Component {
         if (connector == null)
             throw new TaskException("Bad connector, null");
 
-        boolean ok = nameChecker(connector.getChildBox());
+        boolean ok = nameChecker((ComponentBox)connector.getComponentChild());
 
         if (!ok)
             throw new TaskException("ComponentBoxes must have unique id");
 
         this.childConnectors.add(connector);
-        this.childConnectors.get(this.childConnectors.indexOf(connector)).setParentBox((ComponentBox)this);
+        this.childConnectors.get(this.childConnectors.indexOf(connector)).setComponentParent(this);
 
     }
 
@@ -94,14 +94,14 @@ public abstract class A_Component {
         //every other case, use recursive call to getAbsoluteCenterPosition()
         //use getParentComponentBox and getOffsetFromParentComponentBox
         Connector cParent = this.getConnectorToParent();
-        A_Component parent = cParent.getParentBox();
+        A_Component parent = cParent.getComponentParent();
         double x = parent.getAbsoluteCenterPosition().getX();
         double y = parent.getAbsoluteCenterPosition().getY();
         double z = parent.getAbsoluteCenterPosition().getZ();
 
-        x += cParent.getOffsetFromParentBox().getX();
-        y += cParent.getOffsetFromParentBox().getY();
-        z += cParent.getOffsetFromParentBox().getZ();
+        x += cParent.getOffsetFromParent().getX();
+        y += cParent.getOffsetFromParent().getY();
+        z += cParent.getOffsetFromParent().getZ();
 
         Point3D absCenter = new Point3D(x, y, z);
 
@@ -120,7 +120,7 @@ public abstract class A_Component {
         List<Connector> children = this.getConnectorsToChildren();
         for(int i = 0; i < children.size(); i++)
         {
-            list.add(children.get(i).getChildBox());
+            list.add(children.get(i).getComponentChild());
         }
         Comparator<A_Component> comp = (A_Component a, A_Component b) -> {return a.toString().compareTo(b.toString());};
         list.sort(comp);
@@ -237,7 +237,7 @@ public abstract class A_Component {
     private A_Component getTopLevel(A_Component iComponentBox) {
 
         if (iComponentBox.hasConnectorToParent()) {
-            iComponentBox = getTopLevel(iComponentBox.getConnectorToParent().getParentBox());
+            iComponentBox = getTopLevel(iComponentBox.getConnectorToParent().getComponentParent());
         }
 
         return iComponentBox;

@@ -41,9 +41,8 @@ public class Tester {
         System.out.println(box4.getAbsoluteCenterPosition());
         System.out.println(box2.getSize()); */
 
-        //Tester22 tester = new Tester22();
-        //tester.runTests();
-        //tester.printResults();
+        testerBlock3Refactor refactor =new testerBlock3Refactor();
+        refactor.runTests();
 
     }
 

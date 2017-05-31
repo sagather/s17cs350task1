@@ -7,10 +7,10 @@ package s17cs350task1;
  */
 public class Connector implements Cloneable{
 
-    private ComponentBox childBox = null, parentBox = null;
+    private A_Component childBox = null, parentBox = null;
     private Point3D offset = null;
 
-    Connector(ComponentBox iChildBox, Point3D iOffset) {
+    Connector(A_Component iChildBox, Point3D iOffset) {
 
         this.childBox = iChildBox;
         this.offset = iOffset;
@@ -32,31 +32,31 @@ public class Connector implements Cloneable{
 
     }
 
-    public ComponentBox getChildBox()
+    public A_Component getComponentChild()
     {
         if(this.childBox == null)
             throw new TaskException("Child box does not exist");
 
-        return this.childBox;
+        return (ComponentBox)this.childBox;
     }
 
-    public Point3D getOffsetFromParentBox()
+    public Point3D getOffsetFromParent()
     {
         if(this.offset == null)
             throw new TaskException("Offset is invalid");
         return this.offset;
     }
 
-    public ComponentBox getParentBox()
+    public ComponentBox getComponentParent()
     {
         if(this.parentBox == null)
             throw new TaskException("No parent box connected");
-        return this.parentBox;
+        return (ComponentBox)this.parentBox;
     }
 
     public boolean hasParentBox(){   return !(this.parentBox == null);   }
 
-    public void setParentBox(ComponentBox iParentBox)
+    public void setComponentParent(A_Component iParentBox)
     {
         if(iParentBox == null)
             throw new TaskException("Must be a valid box");
