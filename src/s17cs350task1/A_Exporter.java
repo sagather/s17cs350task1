@@ -7,8 +7,6 @@ public abstract class A_Exporter {
 
     public A_Exporter(){
 
-
-
     }
 
     abstract void addPoint(String id, Point3D point);
@@ -35,7 +33,7 @@ public abstract class A_Exporter {
         return false;
     }
 
-    abstract void openCOmponentNode(String id);
+    abstract void openComponentNode(String id);
 
     abstract void openComponentNode(String id, String idParent);
 

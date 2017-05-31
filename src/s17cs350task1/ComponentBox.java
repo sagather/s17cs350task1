@@ -40,7 +40,7 @@ public class ComponentBox extends A_Component implements Cloneable {
 
     @Override
     public String export(A_Exporter exporter) {
-        return null;
+        return exporter.export();
     }
 
     public Dimension3D getSize(){   return this.size;   }
