@@ -17,6 +17,7 @@ public class ExporterXML extends A_Exporter{
         String added = "<point id=\"" + id + "\" x=\"" + point.getX() + "\" y=\"" + point.getY() + "\" z=\"" + point.getZ()
                 + "\"/>";
 
+
     }
 
     @Override
