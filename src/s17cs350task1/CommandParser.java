@@ -189,7 +189,7 @@ public class CommandParser {
                         offset = new Point3D(Double.parseDouble(parts[i + 2]), Double.parseDouble(parts[i + 3]), Double.parseDouble(parts[i + 4]));
                     } else if (compare.compareToIgnoreCase("allow") == 0) {
 
-                        int j = i + 2;
+                        int j = i++;
 
                         if (parts[j].compareToIgnoreCase("disconnection") == 0) {
                             isDisconnectable = true;
@@ -197,10 +197,10 @@ public class CommandParser {
                             isReconnectable = true;
                         }
 
-                        if (j + 2 < parts.length) {
-                            if (parts[j + 2].compareToIgnoreCase("disconnection") == 0) {
+                        if (j+1 < parts.length) {
+                            if (parts[j + 1].compareToIgnoreCase("disconnection") == 0) {
                                 isDisconnectable = true;
-                            } else if (parts[j + 2].compareToIgnoreCase("reconnection") == 0) {
+                            } else if (parts[j + 1].compareToIgnoreCase("reconnection") == 0) {
                                 isReconnectable = true;
                             }
                         }
@@ -239,7 +239,7 @@ public class CommandParser {
                     }
                     else if (compare.compareToIgnoreCase("allow") == 0) {
 
-                        int j = i + 2;
+                        int j = i + 1;
 
                         if (parts[j].compareToIgnoreCase("disconnection") == 0) {
                             isDisconnectable = true;
@@ -247,10 +247,10 @@ public class CommandParser {
                             isReconnectable = true;
                         }
 
-                        if (j + 2 < parts.length) {
-                            if (parts[j + 2].compareToIgnoreCase("disconnection") == 0) {
+                        if (j + 1 < parts.length) {
+                            if (parts[j + 1].compareToIgnoreCase("disconnection") == 0) {
                                 isDisconnectable = true;
-                            } else if (parts[j + 2].compareToIgnoreCase("reconnection") == 0) {
+                            } else if (parts[j + 1].compareToIgnoreCase("reconnection") == 0) {
                                 isReconnectable = true;
                             }
                         }
@@ -409,6 +409,8 @@ public class CommandParser {
             com = new CommandReconnectStrut(id, reconnectId);
 
         }
+
+        //TODO
         else if(lowerCase.contains("generate")){
 
             com = generatePathHelper();
@@ -421,7 +423,63 @@ public class CommandParser {
 
     private A_Command metaCommandHelper(String cCommand){
 
-        return null;
+        A_Command command = null;
+
+        String[] parts = cCommand.split(" ");
+        String compare = "", id = "", lowerCase = cCommand.toLowerCase();
+        double yaw=0, pitch=0, roll=0;
+
+        for (int i = 0; i < parts.length; i++) {
+            compare = parts[i].toLowerCase();
+
+            if(compare.contains("on") || compare.contains("component")){
+
+                id = parts[++i];
+
+            }
+
+        }
+        if(lowerCase.contains("attitude")){
+
+            for (int i = 0; i < parts.length; i++) {
+
+                compare = parts[i].toLowerCase();
+
+                if(compare.contains("to")){
+
+                    i++;
+
+                    if(parts[i].equalsIgnoreCase("yaw")){
+                        yaw = Double.parseDouble(parts[i+1]);
+
+                        for (int j = 0; j < parts.length; j++) {
+
+                        }
+                    }
+                    else if(parts[i].equalsIgnoreCase("pitch")){
+                        pitch = Double.parseDouble(parts[i+1]);
+                        i++;
+                    }
+                    else if(parts[i].equalsIgnoreCase("roll")){
+                        roll = Double.parseDouble(parts[i+1]);
+                        i++;
+                    }
+
+                }
+
+            }
+            if(lowerCase.contains("rate")){
+                command = new CommandMetaForceAttitudeRate(id, new Attitude(yaw, pitch, roll));
+            }
+            else{
+                command = new CommandMetaForceAttitude(id, new Attitude(yaw, pitch, roll));
+            }
+
+        }
+
+        System.out.println(command.toString());
+
+        return command;
     }
 
     private A_Command generatePathHelper(){

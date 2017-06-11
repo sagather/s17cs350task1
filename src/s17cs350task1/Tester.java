@@ -42,9 +42,10 @@ public class Tester {
         System.out.println(box2.getSize()); */
 
         TesterParser parser =new TesterParser();
-        parser.testCreational();
-        parser.testStructural();
-        parser.testBehavioral();
+        //parser.testCreational();
+        //parser.testStructural();
+        //parser.testBehavioral();
+        parser.metaCommandTest();
 
     }
 

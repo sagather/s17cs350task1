@@ -35,8 +35,8 @@ public class TesterParser {
 
     public void testStructural(){
 
-        String command1 = "CREATE STATIC CONNECTOR 3 FROM B TO J WITH OFFSET ( 1 1 1 ) [ ALLOW ( DISCONNECTION ) ]\n";
-        String command2 = "CREATE DYNAMIC CONNECTOR J FROM 3 TO A WITH OFFSET ALPHA ( 3 3 2 ) BETA ( 2 4 1 ) EXTENT INITIAL 3 SPEED 9 [ ALLOW ( RECONNECTION ) ]\n";
+        String command1 = "CREATE STATIC CONNECTOR 3 FROM B TO J WITH OFFSET ( 1 1 1 ) ALLOW DISCONNECTION \n";
+        String command2 = "CREATE DYNAMIC CONNECTOR J FROM 3 TO A WITH OFFSET ALPHA ( 3 3 2 ) BETA ( 2 4 1 ) EXTENT INITIAL 3 SPEED 9 ALLOW RECONNECTION \n";
         String command3 = "BUILD MAIN THRUSTER GROUP F4 WITH 8\n";
         String command4 = "BUILD VERNIER THRUSTER GROUP G6 WITH 9 G7\n";
         String command5 = "ADD THRUSTER F4 TO J\n";
@@ -61,6 +61,30 @@ public class TesterParser {
 
         CommandController cc = new CommandController();
         CommandParser parser = new CommandParser(cc, command1 + command2 + command3 + command4 + command5 + command6);
+        parser.parse();
+
+    }
+
+    public void metaCommandTest(){
+
+        String com1 = "@FORCE ATTITUDE ON G9 TO YAW 9\n";
+        String com2 = "@FORCE ATTITUDE ON 8 TO PITCH 8 ROLL 5\n";
+        String com3 = "@FORCE ATTITUDE ON N TO ROLL 2 \n";
+        String com4 = "@FORCE ATTITUDE RATE ON 5 TO YAW 4 PITCH 43\n";
+        String com5 = "@FORCE POSITION ON 8 TO ( 9 _ 3 )\n";
+        String com6 = "@FORCE MOTION VECTOR ON G8 TO [ 89 22 3 ]\n";
+        String com7 = "@CONFIG CLOCK 78 3\n";
+        String com8 = "@WAIT 100";
+        String com9 = "@SCHEDULE 73 <  >";
+        String com10 = "@LOAD filename";
+        String com11 = "@COMMIT";
+        String com12 = "@EXIT";
+        String com13 = "@PAUSE";
+        String com14 = "@RESUME";
+        String com15 = "@DUMP COMPONENT 9";
+
+        CommandController cc = new CommandController();
+        CommandParser parser = new CommandParser(cc, com1 + com2 + com3 + com4);
         parser.parse();
 
     }
